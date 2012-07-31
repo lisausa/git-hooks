@@ -8,8 +8,6 @@ require 'tempfile'
 user = `git config jira.username`.chomp
 password = `git config jira.password`.chomp
 
-# user = ENV['JIRA_USERNAME']
-# password = ENV['JIRA_PASSWORD']
 user and password or raise 'You must set your JIRA credentials'
 
 query = %[assignee = #{user} AND status IN (Open,"In Progress",Reopened,Building,"Testing - QA") ORDER BY key]
@@ -20,11 +18,11 @@ uri.query = URI.encode_www_form(jql: query)
 request = Net::HTTP::Get.new uri.request_uri
 request.basic_auth user, password
 
-RESPONSE = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') { |http|
+response = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') { |http|
   http.request(request)
 }
 
-DATA = JSON.parse(RESPONSE.body)
+data = JSON.parse(response.body)
 
 File.open(ARGV[0], 'r+') do |target_file|
   changes_summary = ''
@@ -45,8 +43,8 @@ File.open(ARGV[0], 'r+') do |target_file|
 # --------------------------------------------------------------------------------------
 END
 
-  if DATA['issues']
-    DATA['issues'].each do |issue|
+  if data['issues']
+    data['issues'].each do |issue|
       target_file.puts '#[%s] - %s' % [issue['key'], issue['fields']['summary']]
     end
   else
