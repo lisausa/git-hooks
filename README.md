@@ -41,7 +41,7 @@ This allows for an easy way to attach JIRA issue IDs to commits, so that the JIR
 To get this set up, you need to download the hook, then set your JIRA credentials. Do this within the LISA project root:
 
 ```
-% curl [insert gist link here] > .git/hooks/prepare-commit-msg
+% curl 'https://raw.github.com/gist/74793d8f4744ad8108e4/prepare-commit-msg.rb' > .git/hooks/prepare-commit-msg
 % chmod a+x .git/hooks/prepare-commit-msg
 % git config jira.username '<username>' # these are your JIRA log in credentials
 % git config jira.password '<password>'
