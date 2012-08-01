@@ -60,12 +60,13 @@ To get this set up, you need to set up your LISA/Spidey local git repository hoo
 ```
 
 Then set up your JIRA credantials:
+
 ```
 % git config jira.username '<username>' # these are your JIRA log in credentials
 % git config jira.password '<password>'
 ```
 
-Now when you attempt a commit, it will pull down a list of all issues currently assigned to you and in one of the following states:
+Now when you attempt a commit, it will verify you're not committing a syntax error; then it will pull down a list of all issues currently assigned to you and in one of the following states, and make sure you uncomment one:
 
 - Open
 - In Progress
