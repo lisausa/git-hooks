@@ -10,7 +10,7 @@ password = `git config jira.password`.chomp
 
 user and password or raise 'You must set your JIRA credentials'
 
-query = %[assignee = #{user} AND status IN (Open,"In Progress",Reopened,Building,"Testing - QA") ORDER BY key]
+query = %[assignee = "#{user}" AND status IN (Open,"In Progress",Reopened,Building,"Testing - QA") ORDER BY key]
 
 uri = URI('https://lisausa.atlassian.net/rest/api/2/search')
 uri.query = URI.encode_www_form(:jql => query)
@@ -24,6 +24,7 @@ response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https'
 
 data = JSON.parse(response.body)
 
+raise "No file given!" unless ARGV[0]
 File.open(ARGV[0], 'r+') do |target_file|
   changes_summary = ''
   # Scan through the lines until we find 'Changes to be committed:'
