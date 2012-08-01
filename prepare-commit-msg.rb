@@ -13,12 +13,12 @@ user and password or raise 'You must set your JIRA credentials'
 query = %[assignee = #{user} AND status IN (Open,"In Progress",Reopened,Building,"Testing - QA") ORDER BY key]
 
 uri = URI('https://lisausa.atlassian.net/rest/api/2/search')
-uri.query = URI.encode_www_form(jql: query)
+uri.query = URI.encode_www_form(:jql => query)
 
 request = Net::HTTP::Get.new uri.request_uri
 request.basic_auth user, password
 
-response = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') { |http|
+response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') { |http|
   http.request(request)
 }
 
