@@ -46,7 +46,7 @@ File.open(ARGV[0], 'r+') do |target_file|
   end
 
   target_file.puts <<-END
-#
+
 # Below are your active JIRA Issues:
 # (uncomment one or more to attach this commit to it):
 #
