@@ -5,8 +5,11 @@ require 'net/http'
 require 'net/https'
 require 'tempfile'
 
+ARGV[1] == 'message' and exit 0 # this happens when -m was given to git-commit
+
 user = `git config jira.username`.chomp
 password = `git config jira.password`.chomp
+
 
 user and password or raise 'You must set your JIRA credentials'
 
