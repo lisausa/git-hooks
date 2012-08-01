@@ -52,7 +52,7 @@ This ensures that your commit message includes a JIRA issue ID, and won't let yo
 
 To get this set up, you need to set up your LISA/Spidey local git repository hooks folder to be a checkout of this repo. Do this within the Rails root:
 
-```
+```shell
 % cd .git/
 % rm hooks/*.sample
 % rmdir hooks # if this fails, you have some hooks already and you should deal with that
@@ -61,7 +61,7 @@ To get this set up, you need to set up your LISA/Spidey local git repository hoo
 
 Then set up your JIRA credantials:
 
-```
+```shell
 % git config jira.username '<username>' # these are your JIRA log in credentials
 % git config jira.password '<password>'
 ```
