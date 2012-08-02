@@ -59,5 +59,11 @@ END
   else
     target_file.puts '# !! [ There was an error getting your issues from JIRA ]'
   end
+  target_file.puts <<-END
+#
+# Or, use this to indicate this commit is not attached to an issue:
+#[No-JIRA]
+END
+
   target_file.puts "#\n#\n#{changes_summary}"
 end
