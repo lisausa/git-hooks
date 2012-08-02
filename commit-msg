@@ -6,7 +6,7 @@ message = File.readlines(ARGV[0]).reject { |line| /\A\s*(#|\Z)/.match(line) }
 
 exit 0 if message.empty?
 
-unless message.detect{ |line| /\[\s*([A-Z0-9]+-[0-9]+|NO.?JIRA)\s*\]/.match(line) }
+unless message.detect{ |line| /\[\s*([A-Z0-9]+-[0-9]+|NO.?JIRA)\s*\]/i.match(line) }
   puts "\033[1;37m\033[41m! -> You forgot to add a reference to a JIRA Issue!\033[0m"
   exit 1
 end
