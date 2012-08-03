@@ -8,7 +8,8 @@ require 'tempfile'
 require 'uri'
 require 'cgi'
 
-ARGV[1] == 'message' and exit 0 # this happens when -m was given to git-commit
+# don't run when comments won't be removed by default
+exit 0 if %w[message squash commit].include?(ARGV[1])
 
 user = `git config jira.username`.chomp
 password = `git config jira.password`.chomp
