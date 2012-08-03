@@ -9,11 +9,10 @@ require 'uri'
 require 'cgi'
 
 # don't run when comments won't be removed by default
-exit 0 if %w[message squash commit].include?(ARGV[1])
+exit 0 if ENV['GIT_EDITOR'] == ':' or ARGV[1]
 
 user = `git config jira.username`.chomp
 password = `git config jira.password`.chomp
-
 
 user and password or raise 'You must set your JIRA credentials'
 
