@@ -23,10 +23,8 @@ end
 
 problematic_files = changed_ruby_files.inject([]) do |problematic_files, file|
   if File.readable? file
-    cmd = (file =~ /\.erb\Z/i) ? "erb -xT - #{file} | #{compiler_ruby} -wc" : "#{compiler_ruby} -wc #{file}"
-
     errors = nil
-    popen3(cmd) do |stdin, stdout, stderr|
+    popen3("#{compiler_ruby} -wc #{file}") do |stdin, stdout, stderr|
       errors = stderr.read.split("\n")
     end
 
@@ -45,6 +43,10 @@ if problematic_files.size > 0
   $stderr.puts problematic_files.join("\n\n")
   exit 1
 else
-  # All is well
-  exit 0
+  # All is well, with that stuff, run Checker to verify everything else
+  if `which checker` != ''
+    exec 'checker'
+  else
+    exit 0
+  end
 end
