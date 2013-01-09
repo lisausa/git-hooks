@@ -13,7 +13,7 @@ require 'open3'
 include Open3
 
 # Set this to true if you want warnings to stop your commit
-stop_on_warnings = true
+stop_on_warnings = false
 
 compiler_ruby = `which rbx || which ruby`.strip
 
@@ -28,7 +28,11 @@ problematic_files = changed_ruby_files.inject([]) do |problematic_files, file|
       errors = stderr.read.split("\n")
     end
 
-    errors.reject!{ |line| line =~ /[0-9]+:\s+warning:/ } unless stop_on_warnings
+    unless stop_on_warnings
+      errors.reject! do |line|
+        /[0-9]+:\s+warning:/.match(line).tap{ |m| m && puts(line) }
+      end
+    end
 
     unless errors.empty?
       errors.map!{ |line| line.sub(/#{file}:/, '') }
