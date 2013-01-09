@@ -46,7 +46,13 @@ This allows for an easy way to attach JIRA issue IDs to commits, so that the JIR
 
 ## commit-msg
 
-This ensures that your commit message includes a JIRA issue ID, and won't let you commit without it.
+This ensures that your commit message includes a JIRA issue ID, and won't let you commit without it. 
+
+It scans the (uncommented) lines in the commit message for the following regex:
+
+```ruby
+/\[\s*([A-Z0-9]+-[0-9]+|NO.?JIRA)\s*\]/i
+```
 
 ## Installation
 
